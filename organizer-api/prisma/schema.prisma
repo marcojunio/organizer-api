@@ -1,0 +1,41 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum TypeProcess {
+    Manual    @map("manual")
+    Automatic @map("automatic")
+
+    @@map("type_process")
+}
+
+model Area {
+    id        String    @id @default(uuid())
+    name      String
+    processes Process[]
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+}
+
+model Process {
+    id            String       @id @default(uuid())
+    name          String
+    initDate      DateTime
+    areaId        String
+    area          Area         @relation(fields: [areaId], references: [id], onDelete: Cascade)
+    tools         String
+    responsible   String
+    documentation String?
+    typeProcess   TypeProcess?
+    createdAt     DateTime     @default(now())
+    updatedAt     DateTime     @updatedAt
+
+    children Process[] @relation("SubProcess")
+    parent   Process?  @relation("SubProcess", fields: [parentId], references: [id], onDelete: NoAction)
+    parentId String?
+}

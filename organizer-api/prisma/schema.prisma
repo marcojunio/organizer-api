@@ -36,6 +36,6 @@ model Process {
     updatedAt     DateTime     @updatedAt
 
     children Process[] @relation("SubProcess")
-    parent   Process?  @relation("SubProcess", fields: [parentId], references: [id], onDelete: NoAction)
+    parent   Process?  @relation("SubProcess", fields: [parentId], references: [id], onDelete: SetNull)
     parentId String?
 }

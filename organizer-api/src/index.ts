@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import { notFoundHandler } from './middleware/not-found';
-import { errorHandler } from './middleware/error-handler';
+import { notFoundHandler } from './middleware/notfound';
+import { errorHandler } from './middleware/errorHandler';
 import areaRouter from './routes/area.routes';
 import processRouter from './routes/process.routes';
 

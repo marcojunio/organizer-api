@@ -6,6 +6,12 @@ export const listProcess = async (): Promise<TProcessGetAll[]> => {
         select: {
             id: true,
             name: true,
+            responsible: true,
+            tools: true,
+            typeProcess: true,
+            areaId: true,
+            documentation: true,
+            initDate: true
         },
     });
 };
@@ -34,7 +40,7 @@ export const createProcess = async (process: TProcessWrite): Promise<TProcessRea
 };
 
 export const updateProcess = async (process: TProcessWrite, id: TProcessID): Promise<TProcessRead> => {
-    const { typeProcess, documentation, initDate, name, responsible, tools, areaId } = process;
+    const { typeProcess, documentation, initDate, name, responsible, tools, areaId,parentId } = process;
 
     return db.process.update({
         where: {
@@ -47,7 +53,8 @@ export const updateProcess = async (process: TProcessWrite, id: TProcessID): Pro
             initDate,
             responsible,
             tools,
-            areaId
+            areaId,
+            parentId
         },
         select: {
             id: true,
@@ -84,7 +91,8 @@ export const getTreeProcess = async (id: TAreaID): Promise<any> => {
                     initDate: true,
                     tools: true,
                     responsible: true,
-                    typeProcess: true
+                    typeProcess: true,
+                    children:true
                 }
             },
 

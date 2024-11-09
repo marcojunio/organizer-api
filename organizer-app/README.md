@@ -17,12 +17,9 @@ Navegue até o diretório do frontend (web).
 
 Instale as dependências do projeto:
 
-```bash
-npm install
-```
+### `npm install`
 
 Inicie o servidor do frontend:
 
-```bash
-npm start
-```
+### `npm start`
+

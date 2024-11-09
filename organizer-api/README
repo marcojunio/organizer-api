@@ -17,24 +17,16 @@ Este projeto utiliza Node.js, Prisma e Docker para facilitar o desenvolvimento e
 
 No diretório raiz do projeto backend, instale as dependências usando o comando:
 
-```bash
-npm install
-```
+### `npm install`
 
 Para configurar o banco de dados, use o Docker Compose para iniciar o container:
 
-```bash
-docker-compose up -d
-```
+### `docker-compose up -d`
 
 Após iniciar o container do banco de dados, execute as migrations para garantir que o banco esteja configurado corretamente:
 
-```bash
-npx prisma migrate deploy
-```
+### `prisma migrate deploy`
 
 Agora, você pode iniciar o servidor de desenvolvimento com o comando:
 
-```bash
-npm run dev
-```
+### `npm run dev`

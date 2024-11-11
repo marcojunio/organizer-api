@@ -1,18 +1,18 @@
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Tree } from 'primereact/tree';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import DialogEditProcess from '../components/DialogEditProcess';
 import { useAppContext } from '../context/AppContext';
 import { getTreeProcess } from '../services/processService';
 
 function Hierarchy() {
-  const { state, fetchAreas, showError } = useAppContext();
+  const { state, showError } = useAppContext();
   const [areaId, setAreaId] = useState('');
-  const [nodes, setNode] = useState([]);
+  const [node, setNode] = useState([]);
+  const [idProcess, setIdProcess] = useState(null);
+  const [dialogVisible, setDialogVisible] = useState(false);
 
-  useEffect(() => {
-    fetchAreas();
-  }, []);
 
 
   const fetchProcess = async () => {
@@ -42,6 +42,18 @@ function Hierarchy() {
     return data;
   }
 
+
+  const onSelect = (data) => {
+    setIdProcess(data?.node?.id);
+    setDialogVisible(true);
+  }
+
+  const handleOnSaveSuccess = (saveSuccess) => {
+    if (saveSuccess) {
+      fetchProcess();
+    }
+  }
+
   return (
     <div>
       <h2 className='mt-6'>Consulte uma hierarquia de processos por área</h2>
@@ -61,8 +73,24 @@ function Hierarchy() {
       <Button label="Buscar" onClick={fetchProcess} />
 
       <div className='mt-8'>
-        <Tree filterMode="lenient" filter  filterPlaceholder="Filtrar por nome" value={nodes} emptyMessage='Nenhum resultado encontrado.' className="w-full md:w-30rem" />
+        {node && node.length > 0 && (
+          <Tree
+            
+            filterMode="lenient"
+            selectionMode="single"
+            onSelect={(e) => onSelect(e)}
+            filter
+            filterPlaceholder="Filtrar por nome"
+            value={node}
+            emptyMessage='Nenhum resultado encontrado.'
+            className="w-full"
+          />
+        )}
       </div>
+
+      <DialogEditProcess onSaveSuccess={(e) => handleOnSaveSuccess(e)} id={idProcess} edit={true} onHide={() => setDialogVisible(false)} dialogVisible={dialogVisible} >
+      </DialogEditProcess>
+
     </div >
   );
 }

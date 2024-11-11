@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useAppContext } from '../context/AppContext';
 import { Button } from 'primereact/button';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { createArea, updateArea, deleteArea } from '../services/areaService';
+import { Tooltip } from 'primereact/tooltip';
+import React, { useState } from 'react';
+import { useAppContext } from '../context/AppContext';
+import { createArea, deleteArea, updateArea } from '../services/areaService';
+import { handleInputChange } from '../utils/formUtils';
 
 function Area() {
-  const { state, fetchAreas, showError, showMessage } = useAppContext();
+  const { state, fetchAreas,fetchProcess, showError, showMessage } = useAppContext();
   const [selectedArea, setSelectedArea] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      await fetchAreas();
-    })();
-  }, []);
 
   const editArea = (area, edit) => {
     setSelectedArea(area);
@@ -50,6 +46,8 @@ function Area() {
 
       await fetchAreas();
 
+      await fetchProcess();
+
       successAction();
     } catch (error) {
       showError('Erro ao deletar área');
@@ -59,10 +57,22 @@ function Area() {
   const areaActionBody = (rowData) => (
     <div className="content-area">
       <div>
-        <Button label="Editar" icon="pi pi-pencil" className='p-button-secondary' onClick={() => editArea(rowData, true)} />
+        <Tooltip target=".edit-tooltip" />
+        <a className='edit-tooltip a-icon-click secondary'
+          data-pr-tooltip="Editar"
+          data-pr-position="center"
+          onClick={() => editArea(rowData, true)}>
+          <i className='pi pi-pencil'></i>
+        </a>
       </div>
       <div>
-        <Button label="Excluir" icon="pi pi-trash" onClick={() => deleteRequest(rowData.id)} className="p-button-danger ml-2" />
+        <Tooltip target=".delete-tooltip" />
+        <a
+          data-pr-tooltip="Deletar"
+          data-pr-position="center"
+          className='delete-tooltip a-icon-click danger' onClick={() => deleteRequest(rowData.id)}>
+          <i className='pi pi-trash'></i>
+        </a>
       </div>
     </div>
   );
@@ -72,10 +82,10 @@ function Area() {
       <h2 className='mt-6'>Áreas</h2>
 
       <div className="mt-6">
-        <Button label="Nova Área" icon="pi pi-plus"  onClick={() => editArea(null, false)} className="mb-3" />
-        <DataTable paginator emptyMessage='Nenhum resultado encontrado.'  rows={5} rowsPerPageOptions={[5, 10, 25, 50]} value={state.areas}>
+        <Button label="Nova Área" icon="pi pi-plus" onClick={() => editArea(null, false)} className="mb-3" />
+        <DataTable paginator emptyMessage='Nenhum resultado encontrado.' rows={5} rowsPerPageOptions={[5, 10, 25, 50]} value={state.areas}>
           <Column field="name" header="Nome da Área" />
-          <Column body={areaActionBody} header="Ações" />
+          <Column align={'center'} body={areaActionBody} header="Ações" />
         </DataTable>
       </div>
 
@@ -83,9 +93,10 @@ function Area() {
         <div className="content-area">
           <div>
             <InputText
+              name='name'
               placeholder='Nome'
               value={selectedArea ? selectedArea.name : ''}
-              onChange={(e) => setSelectedArea({ ...selectedArea, name: e.target.value })}
+              onChange={(e) => handleInputChange(e, setSelectedArea)}
             />
           </div>
           <div>

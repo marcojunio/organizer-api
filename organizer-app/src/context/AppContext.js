@@ -1,7 +1,8 @@
 import React, {
   createContext,
   useReducer,
-  useContext
+  useContext,
+  useEffect
 } from 'react';
 import {
   getProcesses
@@ -102,6 +103,11 @@ export const AppProvider = ({
     showMessage,
     hideDialog
   };
+
+  useEffect(() => {
+    fetchAreas();
+    fetchProcesses();
+  }, []);
 
   return <AppContext.Provider value = {
     value

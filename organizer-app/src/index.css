@@ -4,27 +4,40 @@
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
 
-.v-ctn{
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 24px;
-    padding-right: 24px;
+.v-ctn {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 
 .content-area {
   display: flex;
   align-items: center;
-  justify-content: baseline;
+  justify-content: center;
   gap: 10px;
   width: 100%;
 }
 
-body{
+body {
   font-family: system-ui, sans-serif;
   margin: 0;
   padding: 1rem;
   font-family: system-ui, sans-serif;
   color: #898989;
+}
+
+
+.a-icon-click {
+  cursor: pointer;
+}
+
+.secondary {
+  color: #8191a6;
+}
+
+.danger {
+  color: #d45472;
 }

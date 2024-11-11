@@ -11,8 +11,14 @@ export const listProcess = async (): Promise<TProcessGetAll[]> => {
             typeProcess: true,
             areaId: true,
             documentation: true,
-            initDate: true
+            initDate: true,
+            area: {
+                select: {
+                    name: true
+                }
+            }
         },
+
     });
 };
 

@@ -106,6 +106,7 @@ function Process() {
 
         <DataTable paginator rows={5} emptyMessage='Nenhum resultado encontrado.' rowsPerPageOptions={[5, 10, 25, 50]} value={state.processes}>
           <Column field="name" sortable header="Nome do Processo" />
+          <Column field="area.name" sortable header="Área" />
           <Column field="responsible" sortable header="Responsável" />
           <Column field="tools" sortable header="Ferramenta" />
           <Column field="typeProcess" sortable header="Tipo do processo" align={'center'} body={typeProcessBody} />

@@ -102,7 +102,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
     };
 
     return (
-        <Dialog header="Editar Processo" visible={dialogVisible} onHide={() => onHide(false)}>
+        <Dialog header={edit ? 'Editar processo' : 'Novo processo'} visible={dialogVisible} onHide={() => onHide(false)}>
             <div className="formgrid grid">
                 <div className="field col-12 md:col-6">
                     <label htmlFor="name">Nome</label>
@@ -111,7 +111,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         name='name'
                         className='w-full'
                         placeholder='Nome'
-                        value={selectedProcess ? selectedProcess.name : ''}
+                        value={selectedProcess?.name}
                         onChange={(e) => handleInputChange(e, setSelectedProcess)}
                     />
                 </div>
@@ -122,7 +122,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         name='responsible'
                         className='w-full'
                         placeholder='Responsável'
-                        value={selectedProcess ? selectedProcess.responsible : ''}
+                        value={selectedProcess?.responsible}
                         onChange={(e) => handleInputChange(e, setSelectedProcess)}
                     />
                 </div>
@@ -149,7 +149,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         name='areaId'
                         emptyMessage='Nenhum resultado encontrado.'
                         className='w-full'
-                        value={selectedProcess ? selectedProcess.areaId : null}
+                        value={selectedProcess?.areaId}
                         options={state.areas.map((area) => ({ label: area.name, value: area.id }))}
                         onChange={(e) => handleDropdownChange(e, setSelectedProcess)}
                         placeholder="Selecione uma área"
@@ -163,7 +163,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         emptyMessage='Nenhum resultado encontrado.'
                         className='w-full'
                         name='typeProcess'
-                        value={selectedProcess ? selectedProcess.typeProcess : null}
+                        value={selectedProcess?.typeProcess}
                         options={typeProcess.map((area) => ({ label: area.label, value: area.value }))}
                         onChange={(e) => handleDropdownChange(e, setSelectedProcess)}
                         placeholder="Selecione um tipo"
@@ -177,7 +177,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         name='parentId'
                         emptyMessage='Nenhum resultado encontrado.'
                         className='w-full'
-                        value={selectedProcess ? selectedProcess.parentId : null}
+                        value={selectedProcess?.parentId}
                         options={[
                             { label: 'Nenhum', value: null },
                             ...state.processes.map((process) => ({ label: process.name, value: process.id }))
@@ -194,7 +194,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         className='w-full'
                         name='documentation'
                         placeholder='Documentação'
-                        value={selectedProcess ? selectedProcess.documentation : ''}
+                        value={selectedProcess?.documentation}
                         onChange={(e) => handleInputChange(e, setSelectedProcess)}
                     />
                 </div>
@@ -205,7 +205,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         className='w-full'
                         name='tools'
                         placeholder='Ferramenta'
-                        value={selectedProcess ? selectedProcess.tools : ''}
+                        value={selectedProcess?.tools}
                         onChange={(e) => handleInputChange(e, setSelectedProcess)}
                     />
                 </div>

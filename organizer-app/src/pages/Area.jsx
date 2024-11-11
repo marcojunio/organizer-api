@@ -10,7 +10,7 @@ import { createArea, deleteArea, updateArea } from '../services/areaService';
 import { handleInputChange } from '../utils/formUtils';
 
 function Area() {
-  const { state, fetchAreas,fetchProcess, showError, showMessage } = useAppContext();
+  const { state, fetchAreas, fetchProcesses, showError, showMessage } = useAppContext();
   const [selectedArea, setSelectedArea] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -46,10 +46,11 @@ function Area() {
 
       await fetchAreas();
 
-      await fetchProcess();
+      await fetchProcesses();
 
       successAction();
     } catch (error) {
+      console.log(error);
       showError('Erro ao deletar área');
     }
   };
@@ -82,20 +83,20 @@ function Area() {
       <h2 className='mt-6'>Áreas</h2>
 
       <div className="mt-6">
-        <Button label="Nova Área" icon="pi pi-plus" onClick={() => editArea(null, false)} className="mb-3" />
-        <DataTable paginator emptyMessage='Nenhum resultado encontrado.' rows={5} rowsPerPageOptions={[5, 10, 25, 50]} value={state.areas}>
-          <Column field="name" header="Nome da Área" />
+        <Button label="Nova área" icon="pi pi-plus" onClick={() => editArea(null, false)} className="mb-3" />
+        <DataTable selectOnEdit={true}  paginator emptyMessage='Nenhum resultado encontrado.' rows={5} rowsPerPageOptions={[5, 10, 25, 50]} value={state.areas}>
+          <Column field="name" sortable header="Nome da Área" />
           <Column align={'center'} body={areaActionBody} header="Ações" />
         </DataTable>
       </div>
 
-      <Dialog header="Editar Área" visible={dialogVisible} onHide={() => setDialogVisible(false)}>
+      <Dialog header={isEdit ? 'Editar área' : 'Nova área'} visible={dialogVisible} onHide={() => setDialogVisible(false)}>
         <div className="content-area">
           <div>
             <InputText
               name='name'
               placeholder='Nome'
-              value={selectedArea ? selectedArea.name : ''}
+              value={selectedArea?.name}
               onChange={(e) => handleInputChange(e, setSelectedArea)}
             />
           </div>

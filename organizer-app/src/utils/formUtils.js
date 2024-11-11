@@ -20,7 +20,7 @@ export const handleDropdownChange = (event, setState) => {
     
     try {
         //When performing destructuring, if an object with key value comes to value, retrieve it and set the value.
-        defineValue = 'value' in value ? value['value'] : value;
+        defineValue = value?.value? value['value'] : value;
 
     } catch {
         defineValue = value;

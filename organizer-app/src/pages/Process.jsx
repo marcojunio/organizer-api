@@ -91,15 +91,15 @@ function Process() {
 
   return (
     <div>
-      <h2 className='mt-6' >Cadastro de Processos</h2>
+      <h2 className='mt-6' >Processos</h2>
       <div className='mt-6'>
         <Button label="Novo processo" icon="pi pi-plus" onClick={() => editProcess(false,null)} className="mb-3" />
 
         <DataTable paginator rows={5} emptyMessage='Nenhum resultado encontrado.' rowsPerPageOptions={[5, 10, 25, 50]} value={state.processes}>
-          <Column field="name" header="Nome do Processo" />
-          <Column field="responsible" header="Responsável" />
-          <Column field="tools" header="Ferramenta" />
-          <Column field="typeProcess" header="Tipo do processo" align={'center'} body={typeProcessBody} />
+          <Column field="name" sortable header="Nome do Processo" />
+          <Column field="responsible" sortable header="Responsável" />
+          <Column field="tools" sortable header="Ferramenta" />
+          <Column field="typeProcess" sortable header="Tipo do processo" align={'center'} body={typeProcessBody} />
           <Column align={'center'} body={processActionBody} header="Ações" />
         </DataTable>
       </div>

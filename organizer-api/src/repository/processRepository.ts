@@ -40,7 +40,7 @@ export const createProcess = async (process: TProcessWrite): Promise<TProcessRea
 };
 
 export const updateProcess = async (process: TProcessWrite, id: TProcessID): Promise<TProcessRead> => {
-    const { typeProcess, documentation, initDate, name, responsible, tools, areaId,parentId } = process;
+    const { typeProcess, documentation, initDate, name, responsible, tools, areaId, parentId } = process;
 
     return db.process.update({
         where: {
@@ -78,10 +78,8 @@ export const deleteProcess = async (id: TProcessID): Promise<void> => {
 
 
 export const getTreeProcess = async (id: TAreaID): Promise<any> => {
-    return await db.process.findMany({
-        where: {
-            areaId: id,
-        },
+
+    let includeObject: any = {
         include: {
             children: {
                 select: {
@@ -92,11 +90,43 @@ export const getTreeProcess = async (id: TAreaID): Promise<any> => {
                     tools: true,
                     responsible: true,
                     typeProcess: true,
-                    children:true
+                    children: true
                 }
             },
-
         }
+    }
+
+    let pointer = includeObject.include;
+
+    for (let i = 0; i < 50; i++) {
+
+        pointer.children = {
+            include: {
+                children: {
+                    select: {
+                        id: true,
+                        name: true,
+                        documentation: true,
+                        initDate: true,
+                        tools: true,
+                        responsible: true,
+                        typeProcess: true,
+                        children: true
+                    }
+                },
+            }
+        }
+        pointer = pointer.children.include;
+    }
+
+    return await db.process.findMany({
+        where: {
+            areaId: id,
+            parentId: {
+                equals: null
+            }
+        },
+        include: includeObject.include
     });
 };
 

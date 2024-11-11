@@ -43,7 +43,7 @@ function Process() {
         <a className='edit-tooltip a-icon-click secondary'
           data-pr-tooltip="Editar"
           data-pr-position="center"
-          onClick={() => editProcess(true,rowData.id)}>
+          onClick={() => editProcess(true, rowData.id)}>
           <i className='pi pi-pencil'></i>
         </a>
       </div>
@@ -92,8 +92,17 @@ function Process() {
   return (
     <div>
       <h2 className='mt-6' >Processos</h2>
-      <div className='mt-6'>
-        <Button label="Novo processo" icon="pi pi-plus" onClick={() => editProcess(false,null)} className="mb-3" />
+
+      <div className='mt-2'>
+        
+        <div className="flex flex-wrap align-items-center justify-content-end mb-3">
+          <Button
+            label="Novo processo"
+            icon="pi pi-plus"
+            onClick={() => editProcess(false, null)}
+            className="mb-3"
+          />
+        </div>
 
         <DataTable paginator rows={5} emptyMessage='Nenhum resultado encontrado.' rowsPerPageOptions={[5, 10, 25, 50]} value={state.processes}>
           <Column field="name" sortable header="Nome do Processo" />

@@ -92,7 +92,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                 onSaveSuccess(true);
 
             clearForm();
-            
+
         } catch (error) {
             showError('Erro ao salvar processo');
 
@@ -102,7 +102,9 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
     };
 
     return (
-        <Dialog header={edit ? 'Editar processo' : 'Novo processo'} visible={dialogVisible} onHide={() => onHide(false)}>
+        <Dialog 
+        style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}
+        header={edit ? 'Editar processo' : 'Novo processo'} visible={dialogVisible} onHide={() => onHide(false)}>
             <div className="formgrid grid">
                 <div className="field col-12 md:col-6">
                     <label htmlFor="name">Nome</label>
@@ -127,7 +129,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                     />
                 </div>
 
-                <div className="field col-12 md:col-4">
+                <div className="field col-12 md:col-6">
                     <label htmlFor="date">Data de início</label>
                     <Calendar
                         locale='pt'
@@ -142,7 +144,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                     />
                 </div>
 
-                <div className="field col-12 md:col-3">
+                <div className="field col-12 md:col-6">
                     <label htmlFor="area">Área</label>
                     <Dropdown
                         id='area'
@@ -156,7 +158,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                     />
                 </div>
 
-                <div className="field col-12 md:col-2">
+                <div className="field col-12 md:col-6">
                     <label htmlFor="typeProcess">Tipo de processo</label>
                     <Dropdown
                         id='typeProcess'
@@ -170,7 +172,7 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                     />
                 </div>
 
-                <div className="field col-12 md:col-3">
+                <div className="field col-12 md:col-6">
                     <label htmlFor="area">Processo Pai</label>
                     <Dropdown
                         id='parentId'
@@ -209,9 +211,10 @@ function DialogEditProcess({ dialogVisible, onHide, edit, id, onSaveSuccess }) {
                         onChange={(e) => handleInputChange(e, setSelectedProcess)}
                     />
                 </div>
-                <div className='col-12 md:col-6 lg:col-4'>
-                    <Button label="Salvar" onClick={saveProcess} />
-                </div>
+            </div>
+            <div className="flex flex-wrap align-items-center justify-content-end">
+                <Button label="Cancelar" className='mr-2' severity="danger" onClick={() => onHide(false)} />
+                <Button label="Salvar" onClick={saveProcess} />
             </div>
         </Dialog >
     )

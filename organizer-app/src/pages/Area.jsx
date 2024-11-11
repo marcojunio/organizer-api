@@ -82,9 +82,13 @@ function Area() {
     <div>
       <h2 className='mt-6'>Áreas</h2>
 
-      <div className="mt-6">
-        <Button label="Nova área" icon="pi pi-plus" onClick={() => editArea(null, false)} className="mb-3" />
-        <DataTable selectOnEdit={true}  paginator emptyMessage='Nenhum resultado encontrado.' rows={5} rowsPerPageOptions={[5, 10, 25, 50]} value={state.areas}>
+      <div className="mt-2">
+
+        <div className="flex flex-wrap align-items-center justify-content-end mb-3">
+          <Button label="Nova área" icon="pi pi-plus" onClick={() => editArea(null, false)} className="mb-3" />
+        </div>
+
+        <DataTable  selectOnEdit={true} paginator emptyMessage='Nenhum resultado encontrado.' rows={5} rowsPerPageOptions={[5, 10, 25, 50]} value={state.areas}>
           <Column field="name" sortable header="Nome da Área" />
           <Column align={'center'} body={areaActionBody} header="Ações" />
         </DataTable>
@@ -100,9 +104,12 @@ function Area() {
               onChange={(e) => handleInputChange(e, setSelectedArea)}
             />
           </div>
-          <div>
+
+          <div className="flex flex-wrap align-items-center justify-content-end">
+            <Button label="Cancelar" className='mr-2' severity="danger" onClick={() => setDialogVisible(false)} />
             <Button label="Salvar" onClick={saveArea} />
           </div>
+
         </div>
       </Dialog>
     </div>

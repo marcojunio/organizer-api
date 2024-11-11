@@ -56,9 +56,9 @@ function Hierarchy() {
 
   return (
     <div>
-      <h2 className='mt-6'>Consulte uma hierarquia de processos por área</h2>
+      <h2 className='mt-6'>Consulte uma hierarquia por área</h2>
 
-      <div className='mt-6 formgrid grid'>
+      <div className='mt-2 formgrid grid'>
         <div className='field col-12 md:col-6'>
           <Dropdown
             className='w-full'

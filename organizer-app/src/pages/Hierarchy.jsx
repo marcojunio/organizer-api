@@ -25,18 +25,21 @@ function Hierarchy() {
     const response = await getTreeProcess(areaId);
 
     const treeNode = response?.data?.map((element) => {
-      return parseNode(element);
+      return parseNode(element, "0");
     });
 
     setNode(treeNode)
   }
 
-  const parseNode = (node) => {
+  const parseNode = (node, parentKey) => {
     const data = {
-      id: node?.id,
+      id:node?.id,
+      key: parentKey + node?.id,
       label: node?.name,
       icon: node?.typeProcess === 'Manual' ? 'pi pi-user' : 'pi pi-cog',
-      children: node?.children ? node.children.map(child => parseNode(child)) : null
+      children: node?.children
+        ? node.children.map((child, index) => parseNode(child, `${parentKey}-${index}`))
+        : null
     }
 
     return data;
@@ -75,7 +78,6 @@ function Hierarchy() {
       <div className='mt-8'>
         {node && node.length > 0 && (
           <Tree
-            
             filterMode="lenient"
             selectionMode="single"
             onSelect={(e) => onSelect(e)}

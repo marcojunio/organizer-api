@@ -70,7 +70,7 @@ function Process() {
           data-pr-tooltip="Manual"
           data-pr-position="center"
           style={{ fontSize: '1rem' }}
-          className='custom-target-icon pi pi-user'>
+          className='custom-target-icon-manual pi pi-user'>
         </i>
         <Tooltip showDelay={200} hideDelay={500} target=".custom-target-icon-manual" />
       </>

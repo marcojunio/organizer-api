@@ -1,14 +1,32 @@
 version: '3.8'
 services:
-  postgres:
+
+  database:
     image: postgres:10.3
+    container_name: database_organizer_api
     restart: always
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - ../postgres-data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
-volumes:
-  postgres:
+      - 5432:5432
+
+  app:
+    build:
+      context: ./organizer-api
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./organizer-api:/usr/app/api
+    depends_on:
+      - database
+
+  web:
+    build:
+      context: ./organizer-app
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./organizer-app:/usr/app/web
